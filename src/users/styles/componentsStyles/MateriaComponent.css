@@ -1,0 +1,25 @@
+/*Estilos para el componente de las materias.*/
+.itemMateria{
+    border-radius: .5rem;
+    transition: transform 0.3s; /* Añadimos transición a la propiedad transform para suavizar el cambio */
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #F2F2F2;
+    text-align: center;
+
+}
+.itemMateria:hover{
+    background-color: #459BE6;
+    color: white;
+    cursor: pointer;
+    transform: scale(1.03); /* Agrandamos el elemento al hacer hover */
+}
+.item p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

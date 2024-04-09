@@ -1,0 +1,11 @@
+/*Estilos para la subida de archivos*/
+.contenedorDrag{
+    padding: 1rem;
+    border: .2rem dashed rgb(207, 206, 206);
+    background-color: white;
+  
+}
+.contenedorDrag:hover{
+    cursor: pointer;
+    background-color: #eeeeee;
+}
