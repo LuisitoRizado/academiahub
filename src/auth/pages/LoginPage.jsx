@@ -14,11 +14,30 @@ export const LoginPage = () => {
   const navigate = useNavigate()
   const onLogin = async () => {
     const lastpath = sessionStorage.getItem('lastpath') || '/home';
-    //Deshabilitamos el boton
+    // Deshabilitamos el botón
     const loginButton = document.querySelector('.loginButton')
     loginButton.disabled = true;
+    
+    // Obtener el valor del correo electrónico y la contraseña
+    const username = document.getElementById('correoInput').value;
+    const pass = document.getElementById('passInput').value;
+
     // Validar que las cajas de texto tengan valores
-    if (username !== "" && username !== undefined && pass !== "" && pass !== undefined) {
+    if (username !== "" && pass !== "") {
+        // Validar formato de correo electrónico
+        if (!isValidEmail(username)) {
+            const mensajeError = document.createElement('div');
+            mensajeError.textContent = 'Por favor, ingresa un correo electrónico válido.';
+            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
+            const contenedor = document.querySelector('.passContainer');
+            contenedor.appendChild(mensajeError);
+            setTimeout(() => {
+                mensajeError.remove();
+                loginButton.disabled = false;
+            }, 3000);
+            return;
+        }
+
         try {
             const response = await fetch(`http://localhost:3000/login/${username}/${pass}`);
             const data = await response.json();
@@ -33,20 +52,11 @@ export const LoginPage = () => {
                 });
             } else {
                 // En caso de que no se encuentre el usuario
-                // Puedes manejar el caso de usuario no encontrado aquí
-                // Mostramos un mensaje
-                // CHATGTP, aquí creas un elemento de mensaje de error 
                 const mensajeError = document.createElement('div');
-                mensajeError.textContent = 'Correo o contraseña no válidos';
+                mensajeError.textContent = 'Correo o contraseña incorrectos.';
                 mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
-
-                // Ubicamos el contenedor
                 const contenedor = document.querySelector('.passContainer');
-
-                // Agregamos al contenedor
                 contenedor.appendChild(mensajeError);
-
-                // Eliminar el mensaje después de 2 segundos
                 setTimeout(() => {
                     mensajeError.remove();
                     loginButton.disabled = false;
@@ -60,6 +70,13 @@ export const LoginPage = () => {
         alert('Ingresa los datos, por favor.');
     }
 };
+
+// Función para validar el formato de correo electrónico
+function isValidEmail(email) {
+    // Utilizamos una expresión regular para validar el formato
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 
   const onHandleUser = (e) => {

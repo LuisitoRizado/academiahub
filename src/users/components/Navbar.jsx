@@ -38,12 +38,17 @@ export const Navbar = () => {
                     >
                         Inicio
                     </NavLink>
-                    <NavLink
+                    {
+                        /*
+                        <NavLink
                         className="nav-item nav-link"
                         to="/myFiles"
                     >
                         Contenido
                     </NavLink>
+                        */
+                    }
+                    
 
                     <NavLink
                         className="nav-item nav-link"
@@ -63,7 +68,7 @@ export const Navbar = () => {
                         to="/auth/login"
                         onClick={onLogout}
                     >
-                        Logout
+                        Cerrar sesion
                     </NavLink>
                     <NavLink
                         className='nav-tem nav-link'
