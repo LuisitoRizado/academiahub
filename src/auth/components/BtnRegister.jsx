@@ -10,7 +10,7 @@ export const BtnRegister = ({ name, user, pass, onRespuestaRegistro }) => {
     const onRegister = async (name, user, pass) => {
         try {
             // Logica para el registro del usuario
-            const response = await fetch('http://localhost:3000/registrarUsuario', {
+            const response = await fetch('https://webapi-fsva.onrender.com/registrarUsuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

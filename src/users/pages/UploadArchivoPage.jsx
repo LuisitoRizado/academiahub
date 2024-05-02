@@ -30,7 +30,7 @@ export const UploadArchivoPage = () => {
   //Funciones
   const agregarArchivoABDD = async (idUser, publicId, nombre, url) => {
     try {
-      const response = await fetch('http://localhost:3000/archivo', {
+      const response = await fetch('https://webapi-fsva.onrender.com/archivo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export const UploadArchivoPage = () => {
   //Funcion para agregar a la tabla union, se ejecuta despues de que el archivo se haya subido.
   const agregarArchivoATablaUnion = async (idDocente, idCategoria, idEstado, idArchivo, idMateria) => {
     try {
-      const response = await fetch('http://localhost:3000/archivodemateria', {
+      const response = await fetch('https://webapi-fsva.onrender.com/archivodemateria', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const UploadArchivoPage = () => {
   //Consulta la materia
   const consultarUnion = async (idCarrera, idSemestre, idMateria) => {
     try {
-      const response = await fetch(`http://localhost:3000/materiaSeleccionada/${idCarrera}/${idSemestre}/${idMateria}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/materiaSeleccionada/${idCarrera}/${idSemestre}/${idMateria}`);
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -117,7 +117,7 @@ export const UploadArchivoPage = () => {
   //Funcion para consultar la materia y el docente
   const consultarMateriaYDocente = async (idMateria, idDocente) => {
     try {
-      const response = await fetch(`http://localhost:3000/docente/${idDocente}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/docente/${idDocente}`);
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -132,7 +132,7 @@ export const UploadArchivoPage = () => {
 
     //Hacemos la peticion de la materia
     try {
-      const response = await fetch(`http://localhost:3000/materia/${idMateria}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/materia/${idMateria}`);
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);

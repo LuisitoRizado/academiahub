@@ -20,10 +20,11 @@ export const ContenidoPage = () => {
   }
 
 
-
+//https://webapi-fsva.onrender.com
+//https://webapi-fsva.onrender.com/materiaSeleccionada
   const consultarUnion = async (idCarrera, idSemestre, idMateria) => {
     try {
-      const response = await fetch(`http://localhost:3000/materiaSeleccionada/${idCarrera}/${idSemestre}/${idMateria}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/materiaSeleccionada/${idCarrera}/${idSemestre}/${idMateria}`);
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -39,7 +40,7 @@ export const ContenidoPage = () => {
 
   const cargarTodosLosArchivos = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/archivosdemateria/${materiaSeleccioanda}/${docente}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/archivosdemateria/${materiaSeleccioanda}/${docente}`);
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);

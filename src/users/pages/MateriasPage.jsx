@@ -8,7 +8,7 @@ export const MateriasPage = () => {
 
   const obtenerTodosLosSemestres = async () => {
     try {
-      const response = await fetch('http://localhost:3000/cantidadSemestres');
+      const response = await fetch('https://webapi-fsva.onrender.com/cantidadSemestres');
       const data = await response.json();
       setSemestres(data);
     } catch (error) {
@@ -18,7 +18,7 @@ export const MateriasPage = () => {
 
   const consultarTodasLasMaterias = async (carrera, semestre) => {
     try {
-      const response = await fetch(`http://localhost:3000/materiasPorSemestreYCarrera/${carrera}/${semestre}`);
+      const response = await fetch(`https://webapi-fsva.onrender.com/materiasPorSemestreYCarrera/${carrera}/${semestre}`);
       const data = await response.json();
       
       // Actualiza el estado de las materias para el semestre actual

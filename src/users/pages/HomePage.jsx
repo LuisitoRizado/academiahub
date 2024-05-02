@@ -11,7 +11,7 @@ export const HomePage = () => {
   const [carreras, setCarreras] = useState([]);
   const getAllCarreras = async () => {
     try {
-      const response = await fetch('http://localhost:3000/carreras/');
+      const response = await fetch('https://webapi-fsva.onrender.com/carreras/');
       const data = await response.json();
       setCarreras(data); // Establecemos el estado con el array de carreras
       console.log(data);

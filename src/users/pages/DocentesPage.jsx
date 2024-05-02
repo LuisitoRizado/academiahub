@@ -13,7 +13,7 @@ export const DocentesPage = () => {
     //Funciones
     const cargarTodosLosDocentesDeMateria = async() =>{
         try {
-            const response = await fetch('http://localhost:3000/materiasImpartidas/'+parametros.idMateria);
+            const response = await fetch('https://webapi-fsva.onrender.com/materiasImpartidas/'+parametros.idMateria);
             const data = await response.json();
             setDocentes(data);
             docentes.array.forEach(docente => {
