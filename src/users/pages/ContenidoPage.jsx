@@ -78,13 +78,14 @@ export const ContenidoPage = () => {
   return (
     <div>
       <Navbar />
-      Contenido de la página
+      <h4>Archivos encontrados</h4>
 
       {/*Boton magico para acceder a subir archivo */}
 
 
       {/*Estructura de la pagina */}
 
+    {/*
       <div className="header row d-flex justify-content-center align-items-center">
         <input type="text" className='col-sm-3' />
         <div class="dropdown col-sm-2">
@@ -105,7 +106,7 @@ export const ContenidoPage = () => {
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+        </div>
         </div>
         <div class="dropdown col-sm-2">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,11 +118,12 @@ export const ContenidoPage = () => {
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </div>
+      </div>
+  */}
         <NavLink className='btn btn-primary border border-primary col-sm-2 m-2 d-flex justify-content-center align-items-center flex-column' to={'upload'} >
 
           Subir archivo +
         </NavLink>
-      </div>
       {/*Encabezado de la tabla */}
       <br />
       <br />
@@ -138,7 +140,7 @@ export const ContenidoPage = () => {
         archivosMateria.map(archivo => (
           <div key={archivo.id} className='row d-flex flex-row justify-content-center align-items-center text-center border'>
             <div className='col-sm-3 row' >
-              <img className='col-sm-6 h-25 w-25' src='https://cdn-icons-png.flaticon.com/512/4208/4208479.png' alt="imagen" />
+              <img className='col-sm-6 h-25 w-25' src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' alt="imagen" />
               <a href={archivo.url} target="_blank" rel="noopener noreferrer" className='col-sm-6 d-flex justify-content-center align-items-center' >
                 {archivo.nombre}
               </a>
