@@ -1,89 +1,53 @@
-import React from 'react';
-import { useState } from 'react';
-//Pagina del componente del registro de usuario
+import React, { useState } from 'react';
 import { BtnRegister } from '../components/BtnRegister';
 import { NavLink } from 'react-router-dom';
+
 export const RegisterPage = () => {
+    const [nombre, setNombre] = useState('');
+    const [correo, setCorreo] = useState('');
+    const [pass, setPass] = useState('');
+    const [passConfirmation, setPassConfirmation] = useState('');
+    const [response, setResponse] = useState('');
 
-    //Hooks
-    const [nombre, setNombre] = useState()
-    const [correo, setCorreo] = useState()
-    const [pass, setPass] = useState()
-    const [passConfirmation, setPassConfirmation] = useState()
-    const [response, setResponse] = useState()
-    //Funciones
     const onHandleName = (e) => {
-        setNombre(e.target.value)
-    }
+        setNombre(e.target.value);
+    };
     const onHandleCorreo = (e) => {
-        setCorreo(e.target.value)
-    }
+        setCorreo(e.target.value);
+    };
     const onHandlePass = (e) => {
-        setPass(e.target.value)
-    }
+        setPass(e.target.value);
+    };
     const onHandlePassConfirmation = (e) => {
-        setPassConfirmation(e.target.value)
-    }
+        setPassConfirmation(e.target.value);
+    };
 
-    const onValidateUser = (res) => {
-        //Deshabilitamos el boton
-    const loginButton = document.querySelector('.loginButton')
-    loginButton.disabled = true;
-        //Validamos que el usuario fue creado con exito!
-        setResponse(res);
-        //Dependiendo del mensaje, mostramos el error
-        if(isNaN(res)){
-            //Caso de error
-            //Creamos un componente de alerta
-            const mensajeError = document.createElement('div');
-            mensajeError.textContent = 'El correo introducido ya tienen una cuenta.';
-            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
-
-            // Ubicamos el contenedor
-            const contenedor = document.querySelector('.passContainer');
-
-            // Agregamos al contenedor
-            contenedor.appendChild(mensajeError);
-
-            // Eliminar el mensaje después de 2 segundos
-            setTimeout(() => {
-                mensajeError.remove();
-                loginButton.disabled = false;
-            }, 5000);
+    const onValidateUser = () => {
+        // Validate all fields
+        if (!nombre || !correo || !pass || !passConfirmation) {
+            alert('Por favor, complete todos los campos.');
+            return;
         }
-        else{
-            //Caso de aceptacion
-            const mensajeError = document.createElement('div');
-            mensajeError.textContent = 'Usuario creado con exito, ya puedes iniciar sesion';
-            mensajeError.classList.add('alert', 'alert-success', 'mt-2');
-
-            // Ubicamos el contenedor
-            const contenedor = document.querySelector('.passContainer');
-
-            // Agregamos al contenedor
-            contenedor.appendChild(mensajeError);
-
-            // Eliminar el mensaje después de 2 segundos
-            setTimeout(() => {
-                mensajeError.remove();
-                loginButton.disabled = false;
-            }, 5000);
-
+        // Validate password match
+        if (pass !== passConfirmation) {
+            alert('Las contraseñas no coinciden.');
+            return;
         }
-    }
-    //Validamos que las contrasenas en las cajas de texto coincidan
-    const validateTwoPasswords = () => {
-        if(pass == passConfirmation){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
+        // If all validations pass, display success message
+        const mensajeExito = document.createElement('div');
+        mensajeExito.textContent = 'Usuario creado con éxito. Ahora puedes iniciar sesión.';
+        mensajeExito.classList.add('alert', 'alert-success', 'mt-2');
+        const contenedor = document.querySelector('.passContainer');
+        contenedor.appendChild(mensajeExito);
+        setTimeout(() => {
+            mensajeExito.remove();
+        }, 5000);
+    };
 
     return (
         <div>
-            <section className="vh-100"  >
+            <section className="vh-100">
                 <div className="container h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-lg-12 col-xl-11">
@@ -91,58 +55,44 @@ export const RegisterPage = () => {
                                 <div className="card-body p-md-5">
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
                                             <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Crear cuenta</p>
-
-                                            <form className="mx-1 mx-md-4" onSubmit={(e) => e.preventDefault()}>
-
+                                            <form className="mx-1 mx-md-4">
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
-                                                        <label className="form-label" htmlFor="form3Example1c">Nombre</label>
-                                                        <input type="text" id="form3Example1c" className="form-control" onChange={(e) => onHandleName(e)} />
+                                                        <label className="form-label" htmlFor="nombre">Nombre</label>
+                                                        <input type="text" id="nombre" className="form-control" onChange={onHandleName} />
                                                     </div>
                                                 </div>
-
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
-                                                        <label className="form-label" htmlFor="form3Example3c">Correo electronico</label>
-                                                        <input type="email" id="form3Example3c" className="form-control" onChange={(e) => onHandleCorreo(e)}/>
+                                                        <label className="form-label" htmlFor="correo">Correo electrónico</label>
+                                                        <input type="email" id="correo" className="form-control" onChange={onHandleCorreo} />
                                                     </div>
                                                 </div>
-
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
-                                                        <label className="form-label" htmlFor="form3Example4c">Contrasena</label>
-                                                        <input type="password" id="form3Example4c" className="form-control" onChange={(e) => onHandlePass(e)}/>
+                                                        <label className="form-label" htmlFor="pass">Contraseña</label>
+                                                        <input type="password" id="pass" className="form-control" onChange={onHandlePass} />
                                                     </div>
                                                 </div>
-
                                                 <div className="d-flex flex-row align-items-center mb-4 ">
                                                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0 passContainer">
-                                                        <label className="form-label" htmlFor="form3Example4cd">Confirma tu contrasena</label>
-
-                                                        <input type="password" id="form3Example4cd" className="form-control" onChange={(e) => onHandlePassConfirmation(e)} />
+                                                        <label className="form-label" htmlFor="passConfirmation">Confirma tu contraseña</label>
+                                                        <input type="password" id="passConfirmation" className="form-control" onChange={onHandlePassConfirmation} />
                                                     </div>
                                                 </div>
-
-                                                <div className="d-flex  justify-content-center mx-4 mb-3 mb-lg-4 bg ">
-                                                    <NavLink to={'/auth/login'} className='btn btn-secondary mx-4'>Cancelar </NavLink>
-                                                    <BtnRegister name={nombre} user={correo} pass={pass} onRespuestaRegistro={onValidateUser} >      
-                                                    </BtnRegister>
+                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 bg">
+                                                    <button type="button" className="btn btn-secondary mx-4" onClick={() => window.location.href='/auth/login'}>Cancelar</button>
+                                                    <BtnRegister name={nombre} user={correo} pass={pass} onRespuestaRegistro={onValidateUser}>Registrar</BtnRegister>
                                                 </div>
-
                                             </form>
-
                                         </div>
                                         <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                                className="img-fluid" alt="Sample image" />
-
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" className="img-fluid" alt="Sample image" />
                                         </div>
                                     </div>
                                 </div>
