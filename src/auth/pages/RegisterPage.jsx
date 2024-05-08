@@ -25,12 +25,28 @@ export const RegisterPage = () => {
     const onValidateUser = () => {
         // Validate all fields
         if (!nombre || !correo || !pass || !passConfirmation) {
-            alert('Por favor, complete todos los campos.');
+             // If all validations pass, display success message
+        const mensajeExito = document.createElement('div');
+        mensajeExito.textContent = 'Por favor, llena todos los campos.';
+        mensajeExito.classList.add('alert', 'alert-danger', 'mt-2');
+        const contenedor = document.querySelector('.passContainer');
+        contenedor.appendChild(mensajeExito);
+        setTimeout(() => {
+            mensajeExito.remove();
+        }, 5000);
             return;
         }
         // Validate password match
         if (pass !== passConfirmation) {
-            alert('Las contraseñas no coinciden.');
+             // If all validations pass, display success message
+        const mensajeExito = document.createElement('div');
+        mensajeExito.textContent = 'Las contrasenas deben ser iguales';
+        mensajeExito.classList.add('alert', 'alert-danger', 'mt-2');
+        const contenedor = document.querySelector('.passContainer');
+        contenedor.appendChild(mensajeExito);
+        setTimeout(() => {
+            mensajeExito.remove();
+        }, 5000);
             return;
         }
 
@@ -56,7 +72,7 @@ export const RegisterPage = () => {
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                             <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Crear cuenta</p>
-                                            <form className="mx-1 mx-md-4">
+                                            <form className="mx-1 mx-md-4" onSubmit={(e) => e.preventDefault()}>
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
