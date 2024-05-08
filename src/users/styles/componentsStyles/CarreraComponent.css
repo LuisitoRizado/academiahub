@@ -2,6 +2,7 @@
 .item{
     border-radius: .5rem;
     transition: transform 0.3s; /* Añadimos transición a la propiedad transform para suavizar el cambio */
+    background-color: #F2F2F2;
 }
 
 

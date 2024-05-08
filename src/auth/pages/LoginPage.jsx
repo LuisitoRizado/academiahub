@@ -67,7 +67,15 @@ export const LoginPage = () => {
             // Puedes manejar el error de la solicitud aquí
         }
     } else {
-        alert('Ingresa los datos, por favor.');
+      const mensajeError = document.createElement('div');
+      mensajeError.textContent = 'Por favor, ingresa los datos.';
+      mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
+      const contenedor = document.querySelector('.passContainer');
+      contenedor.appendChild(mensajeError);
+      setTimeout(() => {
+          mensajeError.remove();
+          loginButton.disabled = false;
+      }, 3000);
     }
 };
 

@@ -4,12 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '../components';
 import '../styles/componentsStyles/UploadArchivo.css';
 import { AuthContext } from '../../auth/context/AuthContext';
-
 export const UploadArchivoPage = () => {
   const location = useLocation();
   const parametros = location.state;
   const { user } = useContext(AuthContext);
-
   // Hooks
   const [materia, setMateria] = useState();
   const [carrera, setCarrera] = useState();
@@ -37,7 +35,6 @@ export const UploadArchivoPage = () => {
     formData.append('file', acceptedFiles[0]);
     formData.append('upload_preset', 'uqiqpoca');
     formData.append('api_key', '511399376121436');
-
     // API call to upload file
     const res = await fetch('https://api.cloudinary.com/v1_1/dcun8q7tb/image/upload', {
       method: 'POST',
