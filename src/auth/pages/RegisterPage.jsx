@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BtnRegister } from '../components/BtnRegister';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export const RegisterPage = () => {
     const [nombre, setNombre] = useState('');
@@ -8,7 +9,7 @@ export const RegisterPage = () => {
     const [pass, setPass] = useState('');
     const [passConfirmation, setPassConfirmation] = useState('');
     const [response, setResponse] = useState('');
-
+    const history = useHistory();
     const onHandleName = (e) => {
         setNombre(e.target.value);
     };
@@ -62,15 +63,17 @@ export const RegisterPage = () => {
             return;
         }
 
-        // If all validations pass, display success message
-        const mensajeExito = document.createElement('div');
-        mensajeExito.textContent = 'Usuario creado con éxito. Ahora puedes iniciar sesión.';
-        mensajeExito.classList.add('alert', 'alert-success', 'mt-2');
-        const contenedor = document.querySelector('.passContainer');
-        contenedor.appendChild(mensajeExito);
-        setTimeout(() => {
-            mensajeExito.remove();
-        }, 5000);
+         // If all validations pass, display success message and redirect after 5 seconds
+         const mensajeExito = document.createElement('div');
+         mensajeExito.textContent = 'Usuario creado con éxito. Ahora puedes iniciar sesión.';
+         mensajeExito.classList.add('alert', 'alert-success', 'mt-2');
+         const contenedor = document.querySelector('.passContainer');
+         contenedor.appendChild(mensajeExito);
+         setTimeout(() => {
+             mensajeExito.remove();
+             // Redirect to the previous page
+             history.goBack();
+         }, 5000);
     };
 
     return (
