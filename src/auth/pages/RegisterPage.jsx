@@ -25,17 +25,29 @@ export const RegisterPage = () => {
     const onValidateUser = () => {
         // Validate all fields
         if (!nombre || !correo || !pass || !passConfirmation) {
-             // If all validations pass, display success message
-        const mensajeExito = document.createElement('div');
-        mensajeExito.textContent = 'Por favor, llena todos los campos.';
-        mensajeExito.classList.add('alert', 'alert-danger', 'mt-2');
-        const contenedor = document.querySelector('.passContainer');
-        contenedor.appendChild(mensajeExito);
-        setTimeout(() => {
-            mensajeExito.remove();
-        }, 5000);
+            // If any of the fields are empty, display error message
+            const mensajeError = document.createElement('div');
+            mensajeError.textContent = 'Por favor, llena todos los campos.';
+            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
+            const contenedor = document.querySelector('.passContainer');
+            contenedor.appendChild(mensajeError);
+            setTimeout(() => {
+                mensajeError.remove();
+            }, 5000);
+            return;
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(correo)) {
+            // If email format is invalid, display error message
+            const mensajeError = document.createElement('div');
+            mensajeError.textContent = 'Por favor, ingresa un correo electrónico válido.';
+            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
+            const contenedor = document.querySelector('.passContainer');
+            contenedor.appendChild(mensajeError);
+            setTimeout(() => {
+                mensajeError.remove();
+            }, 5000);
             return;
         }
+        
         // Validate password match
         if (pass !== passConfirmation) {
              // If all validations pass, display success message
