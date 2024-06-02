@@ -4,10 +4,12 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '../components';
 import '../styles/componentsStyles/UploadArchivo.css';
 import { AuthContext } from '../../auth/context/AuthContext';
+
 export const UploadArchivoPage = () => {
   const location = useLocation();
   const parametros = location.state;
   const { user } = useContext(AuthContext);
+
   // Hooks
   const [materia, setMateria] = useState();
   const [carrera, setCarrera] = useState();
@@ -17,12 +19,32 @@ export const UploadArchivoPage = () => {
   const [docenteNombre, setDocenteNombre] = useState();
   const [materiaSeleccioanda, setMateriaSeleccioanda] = useState();
   const [selectedFileName, setSelectedFileName] = useState('');
+  const [filePreview, setFilePreview] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Dropzone configuration
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles[0]);
-    setSelectedFileName(acceptedFiles[0].name); // Update selected file name
+    const file = acceptedFiles[0];
+    const acceptedExtensions = ['png', 'jpg', 'jpeg', 'pdf'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage('El archivo excede el tamaño máximo de 5 MB');
+      setSelectedFileName('');
+      setFilePreview(null);
+    } else if (!acceptedExtensions.includes(fileExtension)) {
+      setErrorMessage('Formato de archivo no permitido. Por favor, suba archivos con extensiones PNG, JPG, JPEG o PDF.');
+      setSelectedFileName('');
+      setFilePreview(null);
+    } else {
+      setErrorMessage('');
+      setSelectedFileName(file.name); // Update selected file name
+      setFilePreview(URL.createObjectURL(file)); // Update file preview
+      // Set file name in input field
+      document.getElementById('fileNameInput').value = file.name;
+    }
   }, []);
+  
+  
 
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
     onDrop,
@@ -31,6 +53,10 @@ export const UploadArchivoPage = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (acceptedFiles[0].size > 5 * 1024 * 1024) {
+      setErrorMessage('El archivo excede el tamaño máximo de 5 MB');
+      return;
+    }
     const formData = new FormData();
     formData.append('file', acceptedFiles[0]);
     formData.append('upload_preset', 'uqiqpoca');
@@ -173,24 +199,25 @@ export const UploadArchivoPage = () => {
             {...getRootProps()}
             className="contenedorDrag d-flex justify-content-center flex-column align-items-center col-sm-6 h-100"
           >
-            <img src="https://cdn-icons-png.flaticon.com/512/126/126477.png" className="mt-2" alt="" height={100} width={100} />
             <input {...getInputProps()} />
-            {isDragActive ? (
-              <p>Drop the files here ...</p>
+            {filePreview ? (
+              <img src={filePreview} alt="Preview" className="mt-2" style={{ maxHeight: '200px', maxWidth: '100%' }} />
             ) : (
-              <p>{selectedFileName ? `Selected file: ${selectedFileName}` : 'Choose a file or drag here'}</p>
+              <>
+                <img src="https://cdn-icons-png.flaticon.com/512/126/126477.png" className="mt-2" alt="" height={100} width={100} />
+                <p>{isDragActive ? 'Drop the files here ...' : 'Choose a file or drag here'}</p>
+              </>
             )}
+            {errorMessage && <p className="error-message alert alert-danger">{errorMessage}</p>}
             <button className="btn btn-outline-primary mt-2">Subir archivo</button>
             <p className="mt-2">Capacidad máxima: <b>5mb</b> </p>
             <p className="mt-2">Archivos permitidos: <b>.PNG, .JPG, .PDF</b> </p>
           </div>
           <div className="optionsFormContainer mx-2 col-sm-5 d-flex flex-column align-items-left justify-content-around h-100">
             <label htmlFor="">Nombre del archivo</label>
-            <input type="text" className="form-control" />
-            <label htmlFor="">Categoria</label>
-            <div className="dropdown">
+            <input id="fileNameInput" type="text" className="form-control" />
+            <div className="dropdown invisible">
               <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Categoria
               </button>
               <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="#">Examen</a></li>
@@ -213,7 +240,6 @@ export const UploadArchivoPage = () => {
             <button className="btn btn-primary">Enviar</button>
 
           </div>
-          {acceptedFiles[0] && (<img src={URL.createObjectURL(acceptedFiles[0])} alt="Uploaded file preview" />)}
         </form>
       </div>
     </div>

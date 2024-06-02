@@ -4,7 +4,7 @@ import { CarreraComponent } from "../components/CarreraComponent"
 import { User, useAuth0 } from "@auth0/auth0-react"
 import { Navbar } from "../components"
 import icon1 from '../../assets/CarrerasIcons/1.png'
-
+import { FaComputer } from "react-icons/fa6";
 export const HomePage = () => {
   //Use auth
   const { userHook } = useAuth0()
@@ -29,7 +29,7 @@ export const HomePage = () => {
     <div>
       <Navbar />
       <br />
-      <h4>Selecciona tu carrera</h4>
+      <h4 className="mx-4">Selecciona tu carrera</h4>
       <br />
       <div className="containerCarreras row d-flex justify-content-center align-items-center">
         {/* Verificamos si carreras es un array antes de usar map */}

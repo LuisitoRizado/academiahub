@@ -26,6 +26,7 @@ export const Navbar = () => {
                 className="navbar-brand"
                 to="/"
             >
+                <img src="https://saltillo.tecnm.mx/tecnologico/logotec.png" height={35} width={35} alt="" className='mx-2'/>
                 AcademiaHub
             </Link>
 

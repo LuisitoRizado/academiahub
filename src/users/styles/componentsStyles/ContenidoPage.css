@@ -4,3 +4,24 @@
     width: 400px; 
     height: 400px;
 }
+
+.tablaArchivos{
+    min-height: 70vh;
+    background: #F5F6FB;
+}
+.inputBuscarArchivo{
+    /*Estilos del searchbar*/
+    border: 1px solid #DEDFE0;
+    border-radius: 5px;
+}
+.contendorSearchBar{
+    position: relative;
+}
+.searchIcon{
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #292828;
+    pointer-events: none; /* Asegura que el icono no bloquee los clics en el input */
+}

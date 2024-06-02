@@ -112,18 +112,22 @@ function isValidEmail(email) {
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-md-9 col-lg-6 col-xl-5">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                className="img-fluid"
+                src="https://coecytcoahuila.gob.mx/wp-content/uploads/2022/11/ITS-1.png"
+                className=" w-75 h-75"
                 alt="Sample image"
               />
             </div>
             <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+              <h4>Inicio de sesion</h4>
+              <br />
+              <br />
               <form>
 
                 <div className="form-outline mb-4">
                   <label className="form-label" htmlFor="form3Example3">
                     Correo electronico
                   </label>
+                  <br />
                   <input
                     type="email"
                     id="correoInput"
@@ -131,6 +135,7 @@ function isValidEmail(email) {
                     placeholder="Introduce una direccion de correo"
                     onChange={(e) => onHandleUser(e)}
                   />
+                  <br />
 
                 </div>
 
@@ -138,6 +143,7 @@ function isValidEmail(email) {
                   <label className="form-label" htmlFor="form3Example4">
                     Contrasena
                   </label>
+                  <br />
                   <input
                     type="password"
                     id="passInput"
@@ -145,6 +151,7 @@ function isValidEmail(email) {
                     placeholder="Introduce tu contrasena"
                     onChange={(e) => onHandlePass(e)}
                   />
+                  <br />
 
                 </div>
 
@@ -161,9 +168,7 @@ function isValidEmail(email) {
                     </label>
                   </div>
                   */}
-                  <a href="#!" className="text-body">
-                    Olvidaste tu contrasena ?
-                  </a>
+                  
                 </div>
 
                 <div className="text-center text-lg-start mt-4 pt-2">
@@ -175,6 +180,7 @@ function isValidEmail(email) {
                   >
                     Login
                   </button>
+                  <br />
                   <p className="small fw-bold mt-2 pt-1 mb-0">
                     No tienes una cuenta? <NavLink to='/auth/signup' > Registrate</NavLink>
                   </p>

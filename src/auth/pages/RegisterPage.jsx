@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BtnRegister } from '../components/BtnRegister';
 import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 
 export const RegisterPage = () => {
     const [nombre, setNombre] = useState('');
@@ -9,71 +8,119 @@ export const RegisterPage = () => {
     const [pass, setPass] = useState('');
     const [passConfirmation, setPassConfirmation] = useState('');
     const [response, setResponse] = useState('');
-    const history = useHistory();
+    const [errorShown, setErrorShown] = useState({
+        nombre : false,
+        correo: false,
+        pass: false,
+        passConfirmation: false,
+    });
     const onHandleName = (e) => {
-        setNombre(e.target.value);
+        const input = e.target.value;
+        if (input.length > 50) {
+            if (!errorShown.nombre) {
+                showError('El nombre debe tener como límite 50 caracteres', 'nombre');
+                setErrorShown({ ...errorShown, nombre: true });
+            }
+            e.target.value = input.substring(0, 50);
+            setNombre(input.substring(0, 50));
+        } else {
+            setErrorShown({ ...errorShown, nombre: false });
+            setNombre(input);
+        }
     };
+
     const onHandleCorreo = (e) => {
-        setCorreo(e.target.value);
+        const input = e.target.value;
+        if (input.length > 50) {
+            if (!errorShown.correo) {
+                showError('El correo debe tener como límite 50 caracteres', 'correo');
+                setErrorShown({ ...errorShown, correo: true });
+            }
+            e.target.value = input.substring(0, 50);
+            setCorreo(input.substring(0, 50));
+        } else {
+            setErrorShown({ ...errorShown, correo: false });
+            setCorreo(input);
+        }
     };
+
     const onHandlePass = (e) => {
-        setPass(e.target.value);
+        const input = e.target.value;
+        if (input.length > 10) {
+            if (!errorShown.pass) {
+                showError('La contraseña debe tener un límite de 10 caracteres', 'pass');
+                setErrorShown({ ...errorShown, pass: true });
+            }
+            e.target.value = input.substring(0, 10);
+            setPass(input.substring(0, 10));
+        } else {
+            setErrorShown({ ...errorShown, pass: false });
+            setPass(input);
+        }
     };
+
     const onHandlePassConfirmation = (e) => {
-        setPassConfirmation(e.target.value);
+        const input = e.target.value;
+        if (input.length > 10) {
+            if (!errorShown.passConfirmation) {
+                showError('La contraseña debe tener un límite de 10 caracteres', 'passConfirmation');
+                setErrorShown({ ...errorShown, passConfirmation: true });
+            }
+            e.target.value = input.substring(0, 10);
+            setPassConfirmation(input.substring(0, 10));
+        } else {
+            setErrorShown({ ...errorShown, passConfirmation: false });
+            setPassConfirmation(input);
+        }
+    };
+
+  
+
+    const showError = (message) => {
+        const mensajeError = document.createElement('div');
+        mensajeError.textContent = message;
+        mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
+        const contenedor = document.querySelector('.passContainer');
+        contenedor.appendChild(mensajeError);
+        setTimeout(() => {
+            mensajeError.remove();
+        }, 5000);
     };
 
     const onValidateUser = () => {
         // Validate all fields
         if (!nombre || !correo || !pass || !passConfirmation) {
-            // If any of the fields are empty, display error message
-            const mensajeError = document.createElement('div');
-            mensajeError.textContent = 'Por favor, llena todos los campos.';
-            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
-            const contenedor = document.querySelector('.passContainer');
-            contenedor.appendChild(mensajeError);
-            setTimeout(() => {
-                mensajeError.remove();
-            }, 5000);
-            return;
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(correo)) {
-            // If email format is invalid, display error message
-            const mensajeError = document.createElement('div');
-            mensajeError.textContent = 'Por favor, ingresa un correo electrónico válido.';
-            mensajeError.classList.add('alert', 'alert-danger', 'mt-2');
-            const contenedor = document.querySelector('.passContainer');
-            contenedor.appendChild(mensajeError);
-            setTimeout(() => {
-                mensajeError.remove();
-            }, 5000);
+            showError('Por favor, llena todos los campos.');
             return;
         }
-        
-        // Validate password match
+ 
+
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(correo)) {
+            showError('Por favor, ingresa un correo electrónico válido.');
+            return;
+        }
+
+        if (pass.length < 8 || !/\d/.test(pass)) {
+            showError('La contraseña debe tener al menos 8 caracteres y contener al menos un número.');
+            return;
+        }
+
+       
+
         if (pass !== passConfirmation) {
-             // If all validations pass, display success message
+            showError('Las contraseñas deben ser iguales.');
+            return;
+        }
+
+        // If all validations pass, display success message or perform other actions
         const mensajeExito = document.createElement('div');
-        mensajeExito.textContent = 'Las contrasenas deben ser iguales';
-        mensajeExito.classList.add('alert', 'alert-danger', 'mt-2');
+        mensajeExito.textContent = 'Registro exitoso.';
+        mensajeExito.classList.add('alert', 'alert-success', 'mt-2');
         const contenedor = document.querySelector('.passContainer');
         contenedor.appendChild(mensajeExito);
         setTimeout(() => {
             mensajeExito.remove();
         }, 5000);
-            return;
-        }
-
-         // If all validations pass, display success message and redirect after 5 seconds
-         const mensajeExito = document.createElement('div');
-         mensajeExito.textContent = 'Usuario creado con éxito. Ahora puedes iniciar sesión.';
-         mensajeExito.classList.add('alert', 'alert-success', 'mt-2');
-         const contenedor = document.querySelector('.passContainer');
-         contenedor.appendChild(mensajeExito);
-         setTimeout(() => {
-             mensajeExito.remove();
-             // Redirect to the previous page
-             history.goBack();
-         }, 5000);
     };
 
     return (
@@ -109,7 +156,7 @@ export const RegisterPage = () => {
                                                         <input type="password" id="pass" className="form-control" onChange={onHandlePass} />
                                                     </div>
                                                 </div>
-                                                <div className="d-flex flex-row align-items-center mb-4 ">
+                                                <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0 passContainer">
                                                         <label className="form-label" htmlFor="passConfirmation">Confirma tu contraseña</label>
@@ -117,13 +164,13 @@ export const RegisterPage = () => {
                                                     </div>
                                                 </div>
                                                 <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 bg">
-                                                    <button type="button" className="btn btn-secondary mx-4" onClick={() => window.location.href='/auth/login'}>Cancelar</button>
+                                                    <button type="button" className="btn btn-secondary mx-4" onClick={() => window.location.href='/auth/login'}>Regresar</button>
                                                     <BtnRegister name={nombre} user={correo} pass={pass} onRespuestaRegistro={onValidateUser}>Registrar</BtnRegister>
                                                 </div>
                                             </form>
                                         </div>
                                         <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" className="img-fluid" alt="Sample image" />
+                                            <img src="https://www.appsflyer.com/wp-content/themes/AF2020/assets/images/placeholders/signup/img-thanks.svg" className="img-fluid" alt="Sample image" />
                                         </div>
                                     </div>
                                 </div>

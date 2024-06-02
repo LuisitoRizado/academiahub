@@ -1,0 +1,20 @@
+/*Estilos de los componentes*/
+.archivoContainer{
+    background-color: #FEFEFE;
+}
+/*Estilos de link*/
+.enlaceLink{
+    /*Le damos los enlaces*/
+    display: block; 
+    color: black;
+    font-weight: bold;
+}
+.archivoContainer:hover{
+    cursor: pointer;
+    background: #F0F7FF;
+    color: #6EC0F7 !important;
+}
+.archivoContainer:hover a{
+    cursor: pointer;
+    color: #6EC0F7 !important;
+}

@@ -1,6 +1,5 @@
 /*Estilos para el componente de los docentes*/
 .itemDocente{
-    border-color: aqua;
     border-radius: .5rem;
     transition: transform 0.3s; /* Añadimos transición a la propiedad transform para suavizar el cambio */
     text-decoration: none;
@@ -10,8 +9,6 @@
     flex-direction: column;
 }
 .itemDocente:hover{
-    background-color: #459BE6;
-    color: white;
     cursor: pointer;
     transform: scale(1.03); /* Agrandamos el elemento al hacer hover */
 }

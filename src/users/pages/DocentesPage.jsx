@@ -35,11 +35,15 @@ export const DocentesPage = () => {
     <div>
       <Navbar />
        
-        <h5 className='m-3'>Selecciona un docente</h5>
+        <h5 className='m-4'>Selecciona un docente</h5>
+        <div className='row d-flex justify-content-center align-items-center'>
+
         {
           docentes.length > 0 ?
             docentes.map(docente =>(
+                <>
                 <DocenteComponent idDocente={docente.idDocente} nombre={docente.Nombre} ap_paterno={docente.Ap_Paterno} ap_materno={docente.Ap_Materno} />
+                </>
             ))
             :
             <div className='d-flex justify-content-center align-items-center flex-column mt-2'>
@@ -49,6 +53,7 @@ export const DocentesPage = () => {
            
         </div>
         }
+        </div>
     </div>
   )
 }
