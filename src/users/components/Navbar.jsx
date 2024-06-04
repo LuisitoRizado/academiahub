@@ -27,7 +27,7 @@ export const Navbar = () => {
                 to="/"
             >
                 <img src="https://saltillo.tecnm.mx/tecnologico/logotec.png" height={35} width={35} alt="" className='mx-2'/>
-                AcademiaHub
+                ITS Hub
             </Link>
 
             <div className="navbar-collapse">

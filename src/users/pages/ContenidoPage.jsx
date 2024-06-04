@@ -4,6 +4,7 @@ import { Navbar } from "../components";
 import "../styles/componentsStyles/ContenidoPage.css";
 import { MdOutlineSearch } from "react-icons/md";
 import { FileComponent } from "../components/FileComponent";
+
 export const ContenidoPage = () => {
   const [archivosMateria, setArchivosMateria] = useState([]);
   const [materia, setMateria] = useState();
@@ -13,6 +14,7 @@ export const ContenidoPage = () => {
   const [materiaSeleccioanda, setMateriaSeleccioanda] = useState();
   const [materiaNombre, setMateriaNombre] = useState();
   const [docenteNombre, setDocenteNombre] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
   function formatearFecha(fecha) {
     const fechaOriginal = new Date(fecha);
@@ -23,7 +25,6 @@ export const ContenidoPage = () => {
     return `${año}-${mes}-${dia}`;
   }
 
-  // Function to query selected material and teacher
   const consultarMateriaYDocente = async (idMateria, idDocente) => {
     try {
       const response = await fetch(
@@ -41,7 +42,6 @@ export const ContenidoPage = () => {
       console.error("Error al consultar la unión:", error.message);
     }
 
-    // Query material
     try {
       const response = await fetch(
         `https://webapi-fsva.onrender.com/materia/${idMateria}`
@@ -59,8 +59,6 @@ export const ContenidoPage = () => {
     }
   };
 
-  //https://webapi-fsva.onrender.com
-  //https://webapi-fsva.onrender.com/materiaSeleccionada
   const consultarUnion = async (idCarrera, idSemestre, idMateria) => {
     try {
       const response = await fetch(
@@ -119,27 +117,34 @@ export const ContenidoPage = () => {
     fetchData();
   }, [materiaSeleccioanda]);
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredArchivos = archivosMateria.filter((archivo) =>
+    archivo.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <Navbar />
       <h6 className="mx-5 mt-4">Materia: <span className="text-secondary"> {materiaNombre} </span></h6> 
       <h6 className="mx-5 mt-4">Docente: <span className="text-secondary"> {docenteNombre} </span></h6> 
-      {/*Boton magico para acceder a subir archivo */}
 
-      {/*Estructura de la pagina */}
-
-      <div className="header row d-flex justify-content-center align-items-center  mt-4">
+      <div className="header row d-flex justify-content-center align-items-center mt-4">
         <div className="col-md-5 contendorSearchBar">
           <MdOutlineSearch className="searchIcon" />
           <input
             type="text"
             className="inputBuscarArchivo form-control"
             placeholder="Buscar archivo"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
-        <div class="dropdown col-md-2">
+        <div className="dropdown col-md-2">
           <button
-            class="btn btn-secondary dropdown-toggle invisible"
+            className="btn btn-secondary dropdown-toggle invisible"
             type="button"
             id="dropdownMenuButton"
             data-toggle="dropdown"
@@ -148,21 +153,21 @@ export const ContenidoPage = () => {
           >
             Categoria
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a className="dropdown-item" href="#">
               Action
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Another action
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Something else here
             </a>
           </div>
         </div>
-        <div class="dropdown col-sm-2">
+        <div className="dropdown col-sm-2">
           <a
-            class="btn btn-secondary dropdown-toggle"
+            className="btn btn-secondary dropdown-toggle invisible"
             href="#"
             role="button"
             id="dropdownMenuLink"
@@ -172,14 +177,14 @@ export const ContenidoPage = () => {
             Ordenar por
           </a>
 
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Fecha
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Nombre
               </a>
             </li>
@@ -193,21 +198,19 @@ export const ContenidoPage = () => {
         </NavLink>
       </div>
 
-      {/*Encabezado de la tabla */}
       <br />
       <br />
       <br />
       <div className="tablaArchivos rounded border mx-5">
-        <div className="tableHeader row d-flex flex-row justify-content-center align-items-center text-center p-2 ">
+        <div className="tableHeader row d-flex flex-row justify-content-center align-items-center text-center p-2">
           <h5 className="col-sm-6">Archivo</h5>
           <h5 className="col-sm-3">Fecha subida</h5>
           <h5 className="col-sm-3">Tipo</h5>
         </div>
-        {/*Parte de la tabla donde se muestran todos los archivos. */}
         <div className="mx-4">
-          {archivosMateria.length > 0 ? (
-            archivosMateria.map((archivo) => (
-              <FileComponent archivo={archivo} />
+          {filteredArchivos.length > 0 ? (
+            filteredArchivos.map((archivo) => (
+              <FileComponent key={archivo.id} archivo={archivo} />
             ))
           ) : (
             <div className="d-flex justify-content-center align-items-center flex-column mt-2">

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Navbar } from "../components";
 import "../styles/componentsStyles/UploadArchivo.css";
 import { AuthContext } from "../../auth/context/AuthContext";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export const UploadArchivoPage = () => {
   const location = useLocation();
@@ -81,6 +82,23 @@ export const UploadArchivoPage = () => {
     );
   };
 
+  //Metodo para mostrar una animacion de carga dentro del botón
+  const mostrarAnimacionDeCarga = () => {
+      const iconoDeCarga = document.querySelector(".iconoDeCarga");
+      iconoDeCarga.classList.remove("invisible");
+      iconoDeCarga.classList.add("rotando");
+      iconoDeCarga.disabled = true;
+      //Tiempo de carga
+      setTimeout(() => {
+        iconoDeCarga.classList.add("invisible");
+        iconoDeCarga.classList.remove("rotando");
+        iconoDeCarga.disabled = false;
+        const modal = new bootstrap.Modal(
+          document.getElementById("exampleModal2")
+        );
+        modal.show();
+      }, 7000);
+  };
   // Function to add file to the database
   const agregarArchivoABDD = async (idUser, publicId, nombre, url) => {
     try {
@@ -247,15 +265,22 @@ export const UploadArchivoPage = () => {
               ></button>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center flex-column">
-              <img src="https://cdn-icons-png.freepik.com/512/7518/7518748.png" alt=""  className="w-50 h-50" />
+              <img
+                src="https://cdn-icons-png.freepik.com/512/7518/7518748.png"
+                alt=""
+                className="w-50 h-50"
+              />
               <h6>Archivo subido con exito!</h6>
             </div>
             <div class="modal-footer">
-            
-              <button type="button" class="btn btn-success" onClick={() => {
-                  //Recargamos la pagina  
-                  window.location.reload()
-              }}>
+              <button
+                type="button"
+                class="btn btn-success"
+                onClick={() => {
+                  //Recargamos la pagina
+                  window.location.reload();
+                }}
+              >
                 Enterado
               </button>
             </div>
@@ -318,7 +343,12 @@ export const UploadArchivoPage = () => {
             </div>
             <div className="optionsFormContainer mx-2 col-sm-5 d-flex flex-column align-items-left justify-content-around h-100">
               <label htmlFor="">Nombre del archivo</label>
-              <input id="fileNameInput" type="text" className="form-control"  disabled/>
+              <input
+                id="fileNameInput"
+                type="text"
+                className="form-control"
+                disabled
+              />
               <div className="dropdown invisible">
                 <button
                   className="btn btn-secondary dropdown-toggle"
@@ -363,10 +393,10 @@ export const UploadArchivoPage = () => {
 
               <button
                 className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal2"
+                onClick={mostrarAnimacionDeCarga}
               >
                 Enviar
+                <AiOutlineLoading className="invisible iconoDeCarga" />
               </button>
             </div>
           </form>
